@@ -25,6 +25,7 @@ public class DeliveryNegativeTest {
                 delivery::calculateCost
         );
 
+
         assertTrue(exception.getMessage().contains("Расстояние"),
                 "Ожидалось сообщение об ошибке, связанное с расстоянием.");
     }

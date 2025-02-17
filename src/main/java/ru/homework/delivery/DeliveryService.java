@@ -6,4 +6,5 @@ public class DeliveryService {
         Delivery delivery = new Delivery(distance, cargo, loadLevel);
         return delivery.calculateCost();
     }
+
 }

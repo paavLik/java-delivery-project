@@ -12,4 +12,5 @@ public enum LoadLevel {
     public double getFactor() {
         return factor;
     }
+
 }

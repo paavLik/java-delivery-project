@@ -59,7 +59,6 @@ public class Delivery {
         int adjustedBaseCost = (int) Math.max(baseCost, 400);
         int finalCost = (int) (adjustedBaseCost * loadFactor);
 
-
         return finalCost;
     }
 }

@@ -30,6 +30,7 @@ class DeliveryServiceTest {
         assertEquals(expectedCost, actualCost);
     }
 
+
     @Test
     @Tag("Boundary")
     @DisplayName("Должен вернуть не менее 400 руб. за доставку")

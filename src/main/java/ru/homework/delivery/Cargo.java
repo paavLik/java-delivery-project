@@ -17,4 +17,5 @@ public class Cargo {
     public boolean isFragile() {
         return this.fragile;
     }
+
 }

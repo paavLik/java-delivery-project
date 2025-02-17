@@ -28,7 +28,6 @@ public class DeliveryTest {
         assertEquals(expectedCost, actualCost);
     }
 
-
     @DisplayName("Тест расчёта стоимости по хрупкости груза")
     @ParameterizedTest(name = "Должен вернуть {1} руб. так как груз {0} ")
     @Tag("Smoke")

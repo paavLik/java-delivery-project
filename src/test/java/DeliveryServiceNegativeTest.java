@@ -17,6 +17,7 @@ class DeliveryServiceNegativeTest {
                 DeliveryService.calculateDeliveryCost(0, Size.SMALL, false, LoadLevel.NORMAL)
         );
 
+
         assertThrows(IllegalArgumentException.class, () ->
                 DeliveryService.calculateDeliveryCost(-10, Size.BIG, true, LoadLevel.HIGH)
         );
