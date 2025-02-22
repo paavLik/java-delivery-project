@@ -1,0 +1,19 @@
+plugins {
+    id 'java'
+    id 'io.qameta.allure' version '2.11.2'
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.9.2'
+    testImplementation 'io.qameta.allure:allure-junit5:2.21.0'
+    testImplementation 'io.qameta.allure:allure-assertj:2.21.0'
+}
+
+test {
+    useJUnitPlatform()
+    systemProperty "junit.jupiter.extensions.autodetection.enabled", "true"
+}

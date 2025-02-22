@@ -1,65 +1,91 @@
 package ru.homework.delivery;
 
+/**
+ * Класс, описывающий доставку груза.
+ */
 public class Delivery {
 
     private final Cargo cargo;
-    private final int distance;
+    private final double distance;
     private final LoadLevel loadLevel;
 
-
-    public Delivery(int distance, Cargo cargo, LoadLevel loadLevel) {
+    /**
+     * Конструктор класса Delivery.
+     *
+     * @param distance  расстояние в км
+     * @param cargo     груз
+     * @param loadLevel уровень загруженности дорог
+     */
+    public Delivery(double distance, Cargo cargo, LoadLevel loadLevel) {
+        if (distance <= 0) {
+            throw new IllegalArgumentException("Ошибка: расстояние должно быть больше 0");
+        }
+        if (loadLevel == null) {
+            throw new IllegalArgumentException("Ошибка: уровень загруженности не указан");
+        }
         this.cargo = cargo;
         this.distance = distance;
         this.loadLevel = loadLevel;
     }
 
-    public int getDistanceCost() {
-        if (distance <= 0) {
-            throw new IllegalArgumentException("Ошибка: расстояние должно быть больше 0");
-        }
-        if (distance > 30) return 300;
-        if (distance > 10) return 200;
-        if (distance > 2) return 100;
-        return 50;
+    /**
+     * Рассчитывает стоимость доставки в зависимости от расстояния.
+     *
+     * @return стоимость доставки по расстоянию
+     */
+    public double getDistanceCost() {
+        if (distance > 30) return 300.0;
+        if (distance > 10) return 200.0;
+        if (distance > 2) return 100.0;
+        return 50.0;
     }
 
-    public int getSizeCost() {
-        if (cargo.getSize() == Size.BIG) return 200;
-        else return 100;
+    /**
+     * Рассчитывает стоимость доставки в зависимости от размера груза.
+     *
+     * @return стоимость доставки по размеру груза
+     */
+    public double getSizeCost() {
+        return (cargo.getSize() == Size.BIG) ? 200.0 : 100.0;
     }
 
-    public int validateFragileDelivery() {
+    /**
+     * Рассчитывает доплату за хрупкость груза.
+     *
+     * @return доплата за хрупкость или исключение, если доставка невозможна.
+     */
+    public double getFragileCost() {
         if (cargo.isFragile() && distance > 30) {
-            throw new IllegalArgumentException("Извините, хрупкий груз нельзя доставить на такое расстояние!");
+            throw new IllegalArgumentException("Ошибка: хрупкий груз нельзя доставить на расстояние более 30 км");
         }
-        return (cargo.isFragile() && distance <= 30) ? 300 : 0;
+        return (cargo.isFragile() && distance <= 30) ? 300.0 : 0.0;
     }
 
+    /**
+     * Получает коэффициент загруженности дорог.
+     *
+     * @return коэффициент загруженности
+     */
     public double getLoadFactor() {
         return loadLevel.getFactor();
     }
 
-    public int calculateCost() {
-        if (distance <= 0) {
-            throw new IllegalArgumentException("Расстояние должно быть больше нуля!");
-        }
+    /**
+     * Финальный расчет стоимости доставки.
+     *
+     * @return итоговая стоимость доставки
+     */
+    public double calculateCost() {
+        // Базовая стоимость
+        double baseCost = getDistanceCost() + getSizeCost() + getFragileCost();
 
-        int fragileCost = validateFragileDelivery();
-        if (fragileCost == -1) {
-            throw new IllegalArgumentException("Ошибка: доставка невозможна");
-        }
+        // Применение коэффициента загруженности
+        double costWithLoadFactor = baseCost * getLoadFactor();
 
-        if (loadLevel == null) {
-            throw new IllegalArgumentException("Ошибка: уровень загруженности не указан");
-        }
+        // Минимальная стоимость 400.0 применяется после коэффициента
+        double finalCost = Math.max(costWithLoadFactor, 400.0);
 
-        double baseCost = getDistanceCost() + getSizeCost() + validateFragileDelivery();
-        double loadFactor = getLoadFactor();
-
-        int adjustedBaseCost = (int) Math.max(baseCost, 400);
-        int finalCost = (int) (adjustedBaseCost * loadFactor);
-
-
-        return finalCost;
+        // Округление до двух знаков
+        return Math.round(finalCost * 100.0) / 100.0;
     }
 }

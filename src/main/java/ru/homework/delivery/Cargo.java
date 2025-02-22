@@ -1,5 +1,8 @@
 package ru.homework.delivery;
 
+/**
+ * Класс, описывающий груз.
+ */
 public class Cargo {
 
     private final Size size;
@@ -15,6 +18,6 @@ public class Cargo {
     }
 
     public boolean isFragile() {
-        return this.fragile;
+        return fragile;
     }
 }
